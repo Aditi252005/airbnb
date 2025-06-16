@@ -98,9 +98,9 @@ app.use((req,res,next)=>{
 // });
 
 
-// app.get("/",(req,res)=>{
-//     res.send("hello i m root");
-// })
+app.get("/",(req,res)=>{
+    res.render("index.ejs");
+})
 
 
 app.use("/listings",listings);
