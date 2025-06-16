@@ -25,6 +25,7 @@ const User=require("./models/user.js");
 const listings= require("./routes/listing.js");
 const reviews= require("./routes/review.js");
 const user=require("./routes/user.js");
+const listingController = require("./controllers/listings.js");
 
 
 main().then(()=>{
@@ -97,9 +98,11 @@ app.use((req,res,next)=>{
 //     res.send(registeredUser);
 // });
 
+const Listing = require('./models/listing');
 
-app.get("/",(req,res)=>{
-    res.render("index.ejs");
+app.get("/", async(req,res)=>{
+   const allListings =await Listing.find({});
+    res.render("listings/index.ejs",{allListings});  
 })
 
 
