@@ -1,0 +1,32 @@
+<% layout("/layouts/boilerplate") %> 
+    <div class="new mt-2">
+        <h3>Create a new listing</h3>
+        <div class="new-form">
+            <form method="post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+                <div class="new-t">
+                <input placeholder="enter title" name="listing[title]" type="text" required>
+                </div>
+                <div class="new-d">
+                <textarea placeholder="enter description" name="listing[description]" required></textarea>
+                </div>
+             
+
+                <div class="new-i">
+                <input name="listing[image]" type="file" required>
+                </div>
+
+                <div class="new-p">
+                <input placeholder="enter price" name="listing[price]" type="number" required>
+                </div>
+                <div class="new-lc">
+                <input placeholder="enter location" name="listing[location]" type="text" required>
+                <input placeholder="enter country" name="listing[country]" type="text" required>
+                </div>
+                
+                <button class="new-btn">Add</button>
+               
+            </form>
+        </div>
+    </div>
+</body>
+</html>
