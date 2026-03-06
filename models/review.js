@@ -3,11 +3,27 @@ const Schema= mongoose.Schema;
 
 const reviewSchema = new Schema({
     comment:String,
-    rating:{
+    food:{
         type:Number,
         min:1,
         max:5,
     },
+    ambience:{
+        type:Number,
+        min:1,
+        max:5,
+    },
+    price:{
+        type:Number,
+        min:1,
+        max:5,
+    },
+    staff:{
+        type:Number,
+        min:1,
+        max:5,
+    },
+    totalRating:Number,
     createdAt:{
         type:Date,
         default:Date.now(),

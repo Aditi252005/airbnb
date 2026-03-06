@@ -1,8 +1,11 @@
 const Listing = require('../models/listing');
 const Review =require("../models/review.js");
 
+
 module.exports.index=async (req,res)=>{
-    const allListings =await Listing.find({});
+    //const allListings =await Listing.find({});
+    const allListings = await Listing.find({}).populate("reviews");
+
     res.render("listings/index.ejs",{allListings});  
 }
 
@@ -22,8 +25,36 @@ module.exports.showListing=async (req,res)=>{
         req.flash("error","Requested Listing does not exist");
         return res.redirect("/listings");
     }
-    console.log(listing);
-    res.render("listings/show.ejs" , {listing});
+    
+   // res.render("listings/show.ejs" , {listing});
+    let foodAvg = 0;
+    let ambienceAvg = 0;
+    let priceAvg = 0;
+    let staffAvg = 0;
+
+    if (listing.reviews.length > 0) {
+
+        listing.reviews.forEach(r => {
+            foodAvg += r.food;
+            ambienceAvg += r.ambience;
+            priceAvg += r.price;
+            staffAvg += r.staff;
+        });
+
+        foodAvg = (foodAvg / listing.reviews.length).toFixed(1);
+        ambienceAvg = (ambienceAvg / listing.reviews.length).toFixed(1);
+        priceAvg = (priceAvg / listing.reviews.length).toFixed(1);
+        staffAvg = (staffAvg / listing.reviews.length).toFixed(1);
+
+    }
+
+    res.render("listings/show.ejs", {
+        listing,
+        foodAvg,
+        ambienceAvg,
+        priceAvg,
+        staffAvg
+    });
 }
 
 module.exports.createListing=async (req,res,next)=>{
@@ -71,3 +102,15 @@ module.exports.deleteListing=async (req,res)=>{
     req.flash("success", "Listing deleted!");
     res.redirect("/listings");
 }
+
+
+module.exports.searchListings = async (req, res) => {
+
+    const query = req.query.q;
+
+    const listings = await Listing.find({
+        title: { $regex: query, $options: "i" }
+    });
+
+    res.render("listings/index", { allListings: listings });
+};

@@ -1,59 +1,122 @@
 <% layout("/layouts/boilerplate") %> 
-<div class="show-card col-9 mt-3">
-    <div class="offset-2">
-            <h3><%= listing.title %></h3>
-    </div>
+<div class="show-page container">
 
-    <div class="card col-8 offset-3">
+    <h2 class="cafe-title"><%= listing.title %></h2>
+
+    <div class="show-main-card">
+
         <img src="<%= listing.image.url %>" class="show-img" alt="listing_image">
-        <div class="card-body mt-3">
-            <p>Owned by- <i> <%= listing.owner.username %> </i></p>
-            <p><%= listing.description %>
-            <p>
-                &#8377;
-                <% if (listing.price) { %>
-                <%= listing.price.toLocaleString("en-IN") %>
-                <% } else { %>
-                Price not available
-                <% } %>
-                /night
-            </p> 
-            <p><%= listing.location %></p>
-            <p><%= listing.country %></p>
+
+        <div class="show-info">
+
+            <div class="rating-breakdown">
+                <p>Food ⭐ <%= foodAvg || "N/A" %></p>
+                <p>Ambience ⭐ <%= ambienceAvg || "N/A" %></p>
+                <p>Price ⭐ <%= priceAvg || "N/A" %></p>
+                <p>Staff ⭐ <%= staffAvg || "N/A" %></p>
+            </div>
+
+            <hr>
+
+            <p class="owner">Owned by <b><%= listing.owner.username %></b></p>
+
+            <p class="desc"><%= listing.description %></p>
+
+            <p class="price">
+                ₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %>
+            </p>
+
+            <p class="location">
+                📍 <%= listing.location %>, <%= listing.country %>
+            </p>
+
         </div>
+
     </div>
+   
 
    <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
-    <div class="show-btn mb-2">
-        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn">Edit</a>
+    <div class="action-buttons">
+        <a href="/listings/<%= listing._id %>/edit" class="btn edit-btn">Edit</a>
 
         <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-            <button class="btn btn-dark offset-4">Delete</button>
+            <button class="btn delete-btn">Delete</button>
         </form>
     </div> 
    <% } %>
 
 
-    <div class="col-8 offset-3 mb-3">
+    <div class="review-section">
         <hr>  
         <% if(currUser) {  %>
         <h4>Leave a Review</h4>
-        <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
-            <div class="mb-3 mt-3">
-                <label for="rating" class="form-label">Rating</label>
+        <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation review-form">
+            <div class="rating-group">
+                <label for="food" class="form-label">Food</label>
 
                 <fieldset class="starability-slot">
-                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                    <label for="first-rate1" title="Terrible">1 star</label>
-                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                    <label for="first-rate2" title="Not good">2 stars</label>
-                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                    <label for="first-rate3" title="Average">3 stars</label>
-                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                    <label for="first-rate4" title="Very good">4 stars</label>
-                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                    <label for="first-rate5" title="Amazing">5 stars</label>
+                    <input type="radio" id="food-no-rate" class="input-no-rate" name="review[food]" value="1" checked aria-label="No rating." />
+                    <input type="radio" id="food1" name="review[food]" value="1" />
+                    <label for="food1" title="Terrible">1 star</label>
+                    <input type="radio" id="food2" name="review[food]" value="2" />
+                    <label for="food2" title="Not good">2 stars</label>
+                    <input type="radio" id="food3" name="review[food]" value="3" />
+                    <label for="food3" title="Average">3 stars</label>
+                    <input type="radio" id="food4" name="review[food]" value="4" />
+                    <label for="food4" title="Very good">4 stars</label>
+                    <input type="radio" id="food5" name="review[food]" value="5" />
+                    <label for="food5" title="Amazing">5 stars</label>
+                </fieldset>
+            </div>
+            <div class="rating-group">
+                <label for="Ambience" class="form-label">Ambience</label>
+
+                <fieldset class="starability-slot">
+                    <input type="radio" id="ambience-no-rate" class="input-no-rate" name="review[ambience]" value="2" checked aria-label="No rating." />
+                    <input type="radio" id="ambience1" name="review[ambience]" value="1" />
+                    <label for="ambience1" title="Terrible">1 star</label>
+                    <input type="radio" id="ambience2" name="review[ambience]" value="2" />
+                    <label for="ambience2" title="Not good">2 stars</label>
+                    <input type="radio" id="ambience3" name="review[ambience]" value="3" />
+                    <label for="ambience3" title="Average">3 stars</label>
+                    <input type="radio" id="ambience4" name="review[ambience]" value="4" />
+                    <label for="ambience4" title="Very good">4 stars</label>
+                    <input type="radio" id="ambience5" name="review[ambience]" value="5" />
+                    <label for="ambience5" title="Amazing">5 stars</label>
+                </fieldset>
+            </div>
+            <div class="rating-group">
+                <label for="Price" class="form-label">Price</label>
+
+                <fieldset class="starability-slot">
+                    <input type="radio" id="price-no-rate" class="input-no-rate" name="review[price]" value="3" checked aria-label="No rating." />
+                    <input type="radio" id="price1" name="review[price]" value="1" />
+                    <label for="price1" title="Terrible">1 star</label>
+                    <input type="radio" id="price2" name="review[price]" value="2" />
+                    <label for="price2" title="Not good">2 stars</label>
+                    <input type="radio" id="price3" name="review[price]" value="3" />
+                    <label for="price3" title="Average">3 stars</label>
+                    <input type="radio" id="price4" name="review[price]" value="4" />
+                    <label for="price4" title="Very good">4 stars</label>
+                    <input type="radio" id="price5" name="review[price]" value="5" />
+                    <label for="price5" title="Amazing">5 stars</label>
+                </fieldset>
+            </div>
+            <div class="rating-group">
+                <label for="Staff" class="form-label">Staff</label>
+
+                <fieldset class="starability-slot">
+                    <input type="radio" id="staff-no-rate" class="input-no-rate" name="review[staff]" value="4" checked aria-label="No rating." />
+                    <input type="radio" id="staff1" name="review[staff]" value="1" />
+                    <label for="staff1" title="Terrible">1 star</label>
+                    <input type="radio" id="staff2" name="review[staff]" value="2" />
+                    <label for="staff2" title="Not good">2 stars</label>
+                    <input type="radio" id="staff3" name="review[staff]" value="3" />
+                    <label for="staff3" title="Average">3 stars</label>
+                    <input type="radio" id="staff4" name="review[staff]" value="4" />
+                    <label for="staff4" title="Very good">4 stars</label>
+                    <input type="radio" id="staff5" name="review[staff]" value="5" />
+                    <label for="staff5" title="Amazing">5 stars</label>
                 </fieldset>
             </div>
             <div class="mb-3 mt-3">
@@ -70,10 +133,17 @@
         
         <div class="row">
             <% for(review of listing.reviews) { %>
-                <div class="card col-5 mb-3">
+                <div class="card col-md-4 mb-3">
                     <div class="card-body">
                         <h5 class="card-title">@<%=review.author.username %></h5>
-                        <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+                        <p>Overall Rating </b>⭐ <%= review.totalRating.toFixed(1) %></p> 
+                        <hr>
+                        <p><b>Food:</b>  <%= "⭐".repeat(review.food) %></p>
+                        <p><b>Ambience:</b>  <%= "⭐".repeat(review.ambience) %></p>
+                        <p><b>Price:</b>  <%= "⭐".repeat(review.price) %></p>
+                        <p><b>Staff:</b>  <%= "⭐".repeat(review.staff) %></p>
+                        
+
                         <p class="card-text"> <%= review.comment %> </p>
                         
                         <% if (currUser && review.author && review.author._id.equals(currUser._id)) { %>

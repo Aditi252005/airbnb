@@ -1,31 +1,27 @@
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+  <div class="container-fluid ml-4">
+    <a class="navbar-brand ml-4" href="/listings"><i class="nav fa-solid fa-mug-hot" style="color: rgb(111, 78, 55);"></i></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="navbar-nav">
-         
-          <a class="nav-link" href="/listings">Explore</a>
-      </div>
 
       <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-          <input class="from-control me-2" type="search" placeholder="Search" />
-          <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <form class="d-flex" action="/listings/search" method="GET">
+          <input class="form-control me-2" type="search" name="q" placeholder="Search cafe" />
+          <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
       </div>
 
       <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="/listings/new">Add a new Listing</a>
+          <a class="nav-link" href="/listings/new">Add a new Cafe <i class="fa-solid fa-mug-hot" style="color: rgb(139, 131, 94);"></i></a>
 
         <% if(!currUser){ %>
-          <a class="nav-link" href="/signup">Sign Up</a>
-          <a class="nav-link" href="/login">Log in</a>
+          <a class="nav-link" href="/signup">Sign Up <i class="fa-solid fa-arrow-right-to-bracket" style="color: rgb(116, 192, 252);"></i></a>
+          <a class="nav-link" href="/login">Log in <i class="fa-solid fa-arrow-right-to-bracket" style="color: rgb(99, 230, 190);"></i></a>
         <% } %>
         <% if(currUser){ %>
-          <a class="nav-link" href="/logout">Log out</a>
+          <a class="nav-link" href="/logout">Log out <i class="fa-solid fa-arrow-right-from-bracket" style="color: rgb(237, 93, 60);"></i></a>
         <% } %>
       </div>
     </div>
