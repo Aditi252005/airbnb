@@ -12,7 +12,7 @@ module.exports.signup=async(req,res)=>{
         console.log(registeredUser);
         req.login(registeredUser, (err)=>{
             if(err) return next(err);
-            req.flash("success","welcome to wanderlust");
+            req.flash("success","WELCOME! happy brewing and scoring");
             res.redirect("/listings");  
         });        
     } catch(e){
